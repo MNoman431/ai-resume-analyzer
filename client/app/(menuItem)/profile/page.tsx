@@ -23,7 +23,7 @@ export default function ProfileItem() {
   if (isLoading) {
     return (
       <div className="w-full h-64 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -49,7 +49,7 @@ export default function ProfileItem() {
       {/* Main Profile Card */}
       <div className="relative overflow-hidden bg-card border border-border rounded-[2.5rem] p-8 shadow-sm">
         {/* Background Decorative Blur */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 blur-[100px] rounded-full" />
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 blur-[100px] rounded-full" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
           {/* Avatar Section */}
@@ -78,7 +78,7 @@ export default function ProfileItem() {
               <h2 className="text-3xl font-black tracking-tight text-foreground capitalize">
                 {user.name}
               </h2>
-              <div className="flex items-center justify-center gap-1 px-3 py-1 rounded-full bg-blue-500/10 text-blue-500 text-xs font-bold uppercase tracking-widest">
+              <div className="flex items-center justify-center gap-1 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-bold uppercase tracking-widest">
                 <ShieldCheck size={12} /> {user.role}
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function ProfileItem() {
               <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
                 Analysis Usage
               </span>
-              <BarChart3 size={18} className="text-blue-500" />
+              <BarChart3 size={18} className="text-emerald-500" />
             </div>
             <div className="flex items-end gap-2 mb-2">
               <span className="text-4xl font-black">{user.analysisCount}</span>
@@ -113,7 +113,7 @@ export default function ProfileItem() {
             {/* Progress Bar */}
             <div className="w-full h-2.5 bg-border rounded-full overflow-hidden">
               <div
-                className="h-full bg-blue-600 rounded-full transition-all duration-1000"
+                className="h-full bg-emerald-600 rounded-full transition-all duration-1000"
                 style={{ width: `${usagePercentage}%` }}
               />
             </div>
@@ -127,7 +127,7 @@ export default function ProfileItem() {
     <span className="text-sm font-bold text-muted-foreground uppercase tracking-wider">
       Plan Expiry
     </span>
-    <Calendar size={18} className="text-blue-500" />
+    <Calendar size={18} className="text-emerald-500" />
   </div>
   <div>
     <p className="text-xl font-bold mt-2">

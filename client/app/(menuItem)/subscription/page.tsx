@@ -51,13 +51,13 @@ const SubscriptionItem = () => {
     <div className="w-full max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-10">
       
       {/* --- MANAGE SUBSCRIPTION CARD --- */}
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-blue-600 to-indigo-700 p-6 md:p-8 text-white shadow-2xl shadow-blue-500/20">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-800 p-6 md:p-8 text-white shadow-2xl shadow-emerald-500/20">
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
           <div className="space-y-2">
             <h2 className="text-2xl font-black flex items-center justify-center md:justify-start gap-3">
               <CreditCard size={28} /> Billing Dashboard
             </h2>
-            <p className="text-blue-100 text-sm max-w-xs leading-relaxed opacity-90">
+            <p className="text-emerald-100 text-sm max-w-xs leading-relaxed opacity-90">
               Manage your subscription, update payment methods, and download past invoices securely.
             </p>
           </div>
@@ -65,10 +65,10 @@ const SubscriptionItem = () => {
           <button
             onClick={() => openPortal()}
             disabled={isPortalLoading}
-            className="w-full md:w-auto group flex items-center justify-center gap-3 bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all active:scale-95 disabled:opacity-70"
+            className="w-full md:w-auto group flex items-center justify-center gap-3 bg-white text-emerald-600 px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all active:scale-95 disabled:opacity-70"
           >
             {isPortalLoading ? (
-              <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
                 Billing Portal
@@ -84,7 +84,7 @@ const SubscriptionItem = () => {
       <div className="space-y-4">
         <div className="flex items-center justify-between px-2">
           <h3 className="font-bold text-lg flex items-center gap-2">
-            <ReceiptText size={20} className="text-blue-500" /> Transaction History
+            <ReceiptText size={20} className="text-emerald-500" /> Transaction History
           </h3>
           <span className="text-[10px] font-bold px-3 py-1 bg-secondary rounded-full border border-border uppercase tracking-widest">
             {payments?.length || 0} Records
@@ -99,7 +99,7 @@ const SubscriptionItem = () => {
                 <div className="flex justify-between items-start">
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs shadow-inner
-                      ${payment.planType === 'gold' ? 'bg-yellow-500/10 text-yellow-600' : 'bg-blue-500/10 text-blue-600'}`}>
+                      ${payment.planType === 'gold' ? 'bg-yellow-500/10 text-yellow-600' : 'bg-emerald-500/10 text-emerald-600'}`}>
                       {payment.planType[0].toUpperCase()}
                     </div>
                     <div>
@@ -144,7 +144,7 @@ const SubscriptionItem = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-[10px] uppercase 
-                          ${payment.planType === 'gold' ? 'bg-yellow-500/10 text-yellow-600' : 'bg-blue-500/10 text-blue-600'}`}>
+                          ${payment.planType === 'gold' ? 'bg-yellow-500/10 text-yellow-600' : 'bg-emerald-500/10 text-emerald-600'}`}>
                           {payment.planType[0]}
                         </div>
                         <span className="font-bold capitalize">{payment.planType}</span>

@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Resume Analyzer",
-  description: "Analyze your resume with AI",
+  title: "CVInsight.AI - Precision AI Resume Analysis",
+  description: "Transform your resume with precision AI analysis and beat the ATS in seconds.",
 };
 
 // Layout ko async rakhein taake cookies await ho saken

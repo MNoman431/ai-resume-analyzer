@@ -50,18 +50,18 @@ const Navbar = ({ isLoggedIn = false }) => {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
           <Link href={"/"} className="flex items-center gap-2 group z-[110]">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-blue-500/20 group-hover:rotate-6 transition-transform">
-              R
+            <div className="w-10 h-10 bg-gradient-to-tr from-emerald-500 to-teal-400 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-emerald-500/20 group-hover:rotate-6 transition-transform">
+              C
             </div>
             <span className="text-xl font-bold tracking-tight text-foreground italic">
-              ResuScan<span className="text-blue-600">.AI</span>
+              CVInsight<span className="text-emerald-500">.AI</span>
             </span>
           </Link>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-8 font-medium text-foreground/70 text-sm">
             {navLinks.map((link) => (
-              <Link key={link.name} href={link.href} className="hover:text-blue-600 transition-colors">
+              <Link key={link.name} href={link.href} className="hover:text-emerald-500 transition-colors">
                 {link.name}
               </Link>
             ))}
@@ -118,8 +118,8 @@ const Navbar = ({ isLoggedIn = false }) => {
               {isLoggedIn ? (
                 <div className="space-y-3">
                   {/* DYNAMIC PROFILE CARD */}
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-blue-600/5 border border-blue-600/10 mb-6 transition-all">
-                    <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/20 overflow-hidden shrink-0">
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 mb-6 transition-all">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-500/20 overflow-hidden shrink-0">
                       {user?.avatar ? (
                         <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
                       ) : (
@@ -150,10 +150,10 @@ const Navbar = ({ isLoggedIn = false }) => {
                       className="flex items-center justify-between w-full p-4 rounded-2xl bg-secondary/50 text-foreground font-semibold active:scale-[0.98] transition-transform"
                     >
                       <div className="flex items-center gap-4">
-                        {theme === "dark" ? <Sun size={20} className="text-yellow-500" /> : <Moon size={20} className="text-blue-500" />}
+                        {theme === "dark" ? <Sun size={20} className="text-yellow-500" /> : <Moon size={20} className="text-emerald-500" />}
                         <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
                       </div>
-                      <div className={`w-10 h-5 rounded-full relative transition-colors ${theme === 'dark' ? 'bg-blue-600' : 'bg-slate-300'}`}>
+                      <div className={`w-10 h-5 rounded-full relative transition-colors ${theme === 'dark' ? 'bg-emerald-500' : 'bg-slate-300'}`}>
                          <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${theme === 'dark' ? 'right-1' : 'left-1'}`} />
                       </div>
                     </button>
@@ -176,7 +176,7 @@ const Navbar = ({ isLoggedIn = false }) => {
                   <Link
                     href="/register"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-blue-600 text-white font-bold text-lg shadow-xl shadow-blue-500/20 active:scale-[0.98] transition-all"
+                    className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 text-white font-bold text-lg shadow-xl shadow-emerald-500/20 active:scale-[0.98] transition-all"
                   >
                     <UserPlus size={20} /> Get Started Free
                   </Link>
@@ -194,7 +194,7 @@ const Navbar = ({ isLoggedIn = false }) => {
 
             <div className="text-center mt-10 pb-6">
                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest opacity-50">
-                ResuScan.AI • Version 1.0.4
+                CVInsight.AI • Version 1.0.4
               </p>
             </div>
           </div>
@@ -209,7 +209,7 @@ const MobileMenuLink = ({ href, icon, label, onClick }: { href: string; icon: Re
     onClick={onClick}
     className="flex items-center gap-4 w-full p-4 rounded-2xl bg-secondary/50 hover:bg-secondary border border-transparent hover:border-border transition-all text-foreground font-semibold active:scale-[0.98]"
   >
-    <span className="text-blue-600">{icon}</span>
+    <span className="text-emerald-500">{icon}</span>
     <span className="flex-1">{label}</span>
     <ChevronRight size={16} className="text-muted-foreground/40" />
   </Link>

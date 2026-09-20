@@ -36,6 +36,15 @@ router.get(
 
 // 2. Google Callback (Jahan Google wapas bhejega)
 router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: `${process.env.FRONTEND_URL}/login`,
+  }),
+  googleAuthCallback,
+);
+
+router.get(
   "/google/back",
   passport.authenticate("google", {
     session: false,

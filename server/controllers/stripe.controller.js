@@ -37,11 +37,12 @@ const createCheckoutSession = asyncHandler(async (req, res) => {
         },
       ],
       mode: "subscription", // Recurring payment ke liye
-      success_url: `${process.env.FRONTEND_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${process.env.FRONTEND_URL}/dashboard?payment=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/payment/cancel`,
       client_reference_id: userId.toString(), // Database update ke liye important he
       metadata: {
         planType: planType,
+        userId: userId.toString(),
       },
       customer_email: req.user?.email, // Stripe checkout page pe email pehle se likha ayega
     });
@@ -63,6 +64,90 @@ const createCheckoutSession = asyncHandler(async (req, res) => {
   } catch (error) {
     throw new ApiError(500, error?.message || "Internal Stripe Error");
   }
+});
+
+const verifyPayment = asyncHandler(async (req, res) => {
+  const sessionId = req.query.session_id || req.body.session_id || req.query.sessionId || req.body.sessionId;
+
+  if (!sessionId) {
+    throw new ApiError(400, "Session ID is required.");
+  }
+
+  // Retrieve checkout session from Stripe
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  if (!session) {
+    throw new ApiError(404, "Stripe session not found.");
+  }
+
+  if (session.payment_status !== "paid" && session.status !== "complete") {
+    throw new ApiError(400, "Payment has not been completed.");
+  }
+
+  const userId = session.client_reference_id || session.metadata?.userId || req.user?._id;
+  if (!userId) {
+    throw new ApiError(400, "User ID missing from payment session.");
+  }
+
+  const planType = session.metadata?.planType || "silver";
+  const planLimits = {
+    silver: 50,
+    gold: 100,
+  };
+
+  const expiryDate = new Date();
+  expiryDate.setDate(expiryDate.getDate() + 30);
+
+  // Check if payment already recorded (idempotency check)
+  let paymentRecord = await paymentSchema.findOne({ stripeSessionId: session.id });
+
+  if (!paymentRecord) {
+    // 1. Update User document in MongoDB Atlas
+    await userModel.findByIdAndUpdate(userId, {
+      plan: planType,
+      maxLimit: planLimits[planType] || 3,
+      analysisCount: 0,
+      planExpiry: expiryDate,
+      stripeCustomerId: session.customer,
+      subscriptionId: session.subscription,
+    });
+
+    // 2. Save Payment record into payments collection
+    const userObj = await userModel.findById(userId);
+    const userEmail = session.customer_details?.email || session.customer_email || userObj?.email;
+
+    paymentRecord = await paymentSchema.create({
+      user: userId,
+      userId: userId,
+      email: userEmail,
+      stripeSessionId: session.id,
+      stripeCustomerId: session.customer || "N/A",
+      subscriptionId: session.subscription || "N/A",
+      amount: (session.amount_total || 0) / 100,
+      currency: (session.currency || "usd").toUpperCase(),
+      status: "completed",
+      plan: planType,
+      planType: planType,
+    });
+  } else {
+    // Ensure user record is up-to-date even if payment record exists
+    await userModel.findByIdAndUpdate(userId, {
+      plan: planType,
+      maxLimit: planLimits[planType] || 3,
+      planExpiry: expiryDate,
+      stripeCustomerId: session.customer,
+      subscriptionId: session.subscription,
+    });
+  }
+
+  const updatedUser = await userModel.findById(userId).select("-password");
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      { user: updatedUser, payment: paymentRecord },
+      "Payment verified and synchronized successfully"
+    )
+  );
 });
 
 // stripe.controller.js
@@ -96,7 +181,7 @@ const createCustomerPortal = asyncHandler(async (req, res) => {
 
 const getMyPayments = asyncHandler(async (req, res) => {
   const payments = await paymentSchema
-    .find({ user: req.user._id })
+    .find({ $or: [{ user: req.user._id }, { userId: req.user._id }] })
     .sort({ createdAt: -1 });
 
   return res
@@ -134,4 +219,4 @@ const cancelSubscription = asyncHandler(async (req, res) => {
     );
 });
 
-export { createCheckoutSession, getMyPayments, createCustomerPortal ,cancelSubscription};
+export { createCheckoutSession, verifyPayment, getMyPayments, createCustomerPortal ,cancelSubscription};

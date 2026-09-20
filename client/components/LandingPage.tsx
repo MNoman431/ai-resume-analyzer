@@ -9,20 +9,20 @@ const LandingPage = () => {
       
       {/* --- HERO SECTION --- */}
       <section className="max-w-7xl mx-auto text-center">
-        <div className="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full mb-8">
+        <div className="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full mb-8">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest">
+          <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
             Next-Gen AI Analysis
           </span>
         </div>
 
         <h1 className="text-3xl md:text-6xl font-black tracking-tight mb-6">
-          Maximize Your <br />
-          <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-500">
-            Interview Conversion
+          Transform Your Resume with <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400">
+            Precision AI Analysis
           </span>
         </h1>
 
@@ -32,9 +32,9 @@ const LandingPage = () => {
 
         {/* --- MAIN ACTION / DROPZONE MOCKUP --- */}
         <div className="mt-16 max-w-4xl h-full mx-auto">
-          <div className="relative group p-1 rounded-[2.5rem] bg-linear-to-b from-blue-500 to-indigo-600 shadow-2xl shadow-blue-500/20">
+          <div className="relative group p-1 rounded-[2.5rem] bg-gradient-to-r from-emerald-500 to-teal-400 shadow-2xl shadow-emerald-500/20">
             {/* Yahan bg-background dark mode mein automatically dark ho jaye ga */}
-            <div className="bg-background rounded-[2.3rem] p-6 flex flex-col items-center border-4 border-dashed border-border hover:border-blue-400 transition-all cursor-pointer">
+            <div className="bg-background rounded-[2.3rem] p-6 flex flex-col items-center border-4 border-dashed border-border hover:border-emerald-400 transition-all cursor-pointer">
               
               <h3 className="text-2xl font-bold mb-2">Drop your resume here</h3>
               <p className="text-slate-500 pb-3 dark:text-slate-400">For Analyze</p>
@@ -65,7 +65,7 @@ const LandingPage = () => {
           }
         ].map((feat, i) => (
           /* bg-card aur border-border ka use */
-          <div key={i} className="p-8 rounded-3xl bg-card border border-border hover:shadow-xl hover:border-blue-500/50 transition-all duration-300">
+          <div key={i} className="p-8 rounded-3xl bg-card border border-border hover:shadow-xl hover:border-emerald-500/50 transition-all duration-300">
             <div className="text-4xl mb-6">{feat.icon}</div>
             <h4 className="text-xl font-bold mb-3">{feat.title}</h4>
             <p className="text-slate-500 dark:text-slate-400 leading-relaxed">{feat.desc}</p>

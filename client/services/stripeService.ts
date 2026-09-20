@@ -22,4 +22,9 @@ export const getPaymentHistory = async (): Promise<PaymentRecord[]> => {
   return res.data.data;
 };
 
+export const verifyPaymentSession = async (sessionId: string) => {
+  const res = await api.post("/stripe/verify-payment", { session_id: sessionId });
+  return res.data;
+};
+
 

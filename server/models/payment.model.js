@@ -5,21 +5,25 @@ const paymentSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    email: { type: String },
     stripeSessionId: { type: String, required: true },
-    stripeCustomerId: { type: String, required: true },
+    stripeCustomerId: { type: String },
     subscriptionId: { type: String },
     amount: { type: Number, required: true },
-    // payment.model.js
-    currency: { type: String, uppercase: true, default: "PKR" },
+    currency: { type: String, uppercase: true, default: "USD" },
     status: {
       type: String,
-      enum: ["succeeded", "pending", "failed"],
-      required: true,
+      enum: ["succeeded", "completed", "pending", "failed"],
+      default: "completed",
     },
-    planType: { type: String, enum: ["silver", "gold"], required: true },
-    receiptUrl: { type: String }, // Jo Stripe se milta hai
+    plan: { type: String },
+    planType: { type: String },
+    receiptUrl: { type: String },
   },
   { timestamps: true },
 );

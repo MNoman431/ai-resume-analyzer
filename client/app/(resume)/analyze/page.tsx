@@ -50,16 +50,16 @@ export default function AnalyzePage() {
 
         {/* HEADER */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full mb-6">
-            <span className="h-2 w-2 bg-blue-500 rounded-full animate-ping"></span>
-            <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">
-              AI Resume Analyzer
+          <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full mb-6">
+            <span className="h-2 w-2 bg-emerald-500 rounded-full animate-ping"></span>
+            <span className="text-xs font-bold text-emerald-500 uppercase tracking-widest">
+              CVInsight AI Analysis
             </span>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-black mb-4">
             Match Your Resume with{" "}
-            <span className="text-blue-600">Job Role</span>
+            <span className="text-emerald-500">Job Role</span>
           </h1>
 
           <p className="text-muted-foreground max-w-xl mx-auto">
@@ -77,27 +77,27 @@ export default function AnalyzePage() {
 
           {/* JOB TITLE */}
           <div>
-            <label className="text-xs font-bold uppercase tracking-widest text-blue-500 mb-2 block">
+            <label className="text-xs font-bold uppercase tracking-widest text-emerald-500 mb-2 block">
               Job Title
             </label>
             <input
               type="text"
               name="jobTitle"
               placeholder="e.g. Frontend Developer"
-              className="w-full bg-background border-2 border-border rounded-xl p-4 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 outline-none"
+              className="w-full bg-background border-2 border-border rounded-xl p-4 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 outline-none"
             />
           </div>
 
           {/* JOB DESCRIPTION */}
           <div>
-            <label className="text-xs font-bold uppercase tracking-widest text-blue-500 mb-2 block">
+            <label className="text-xs font-bold uppercase tracking-widest text-emerald-500 mb-2 block">
               Job Description
             </label>
             <textarea
               name="jobDescription"
               rows={8}
               placeholder="Paste full job description..."
-              className="w-full bg-background border-2 border-border rounded-xl p-4 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 outline-none"
+              className="w-full bg-background border-2 border-border rounded-xl p-4 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 outline-none"
             />
           </div>
 
@@ -110,7 +110,7 @@ export default function AnalyzePage() {
               ${
                 !resumeId || isPending
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+                  : "bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 text-white shadow-lg shadow-emerald-500/20"
               }`}
           >
             {isPending ? (
@@ -135,7 +135,7 @@ export default function AnalyzePage() {
               key={item.step}
               className="bg-card border border-border p-4 rounded-xl flex items-center gap-4"
             >
-              <span className="text-2xl font-black text-blue-500 opacity-30">
+              <span className="text-2xl font-black text-emerald-500 opacity-30">
                 {item.step}
               </span>
               <span className="text-sm font-bold opacity-70">

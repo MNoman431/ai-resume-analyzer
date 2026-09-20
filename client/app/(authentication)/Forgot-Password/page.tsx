@@ -51,7 +51,7 @@ export default function ForgotPasswordPage() {
               type="email"
               placeholder="Enter your email"
               {...register("email", { required: "Email is required" })}
-              className="w-full bg-background text-foreground border border-border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background text-foreground border border-border p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
             />
 
             {errors.email?.message && (
@@ -63,7 +63,7 @@ export default function ForgotPasswordPage() {
 
           <button
             disabled={isPending}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-gradient-to-r from-emerald-500 to-teal-400 text-white py-3 rounded-lg hover:from-emerald-600 hover:to-teal-500 transition shadow-md shadow-emerald-500/20"
           >
             {isPending ? "Sending..." : "Send Reset Link"}
           </button>

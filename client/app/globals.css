@@ -8,18 +8,18 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #f8fafc; /* Soft Gray */
   --foreground: #0F172A; /* Deep Slate for better readability */
-  --card: #f8fafc;
+  --card: #ffffff;
   --border: #e2e8f0;
 }
 
 [data-theme="dark"] {
-  /* Professional Dark Mode Shades */
-  --background: #020617; 
+  /* Modern Slate Dark Mode Shades */
+  --background: #0f172a; /* Modern Slate #0F172A */
   --foreground: #f8fafc; /* Soft White */
-  --card: #0f172a;       /* Slightly lighter than background */
-  --border: #1e293b;     /* Subtle border for separation */
+  --card: #1e293b;       /* Slate 800 */
+  --border: #334155;     /* Slate 700 border */
 }
 
 /* Smooth transitions for ALL color changes */

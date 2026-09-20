@@ -60,8 +60,11 @@ app.use(passport.initialize());
 
 // 4. Routes
 app.use("/user", userRouter);
+app.use("/api/user", userRouter);
 app.use("/resume", resumeRouter);
+app.use("/api/resume", resumeRouter);
 app.use("/stripe", stripeRouter);
+app.use("/api/stripe", stripeRouter);
 
 app.get('/', (req, res) => {
     res.send('API is live and kicking! 🚀');

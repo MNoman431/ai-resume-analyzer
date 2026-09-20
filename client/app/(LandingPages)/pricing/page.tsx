@@ -192,7 +192,7 @@ export default function Pricing() {
     <div className="min-h-screen bg-background pt-10 pb-20 px-6">
       <div className="max-w-5xl mx-auto text-center mb-16">
         <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tight italic">
-          Simple <span className="text-blue-600">Pricing.</span>
+          Simple <span className="text-emerald-500">Pricing.</span>
         </h1>
         <p className="text-xl text-slate-500 font-medium">
           Choose the plan that fits your career goals.
@@ -210,12 +210,12 @@ export default function Pricing() {
               className={`relative p-8 rounded-[2.8rem] border-2 transition-all duration-500 flex flex-col h-full
                 ${
                   isActive
-                    ? "border-blue-600 bg-card shadow-[0_20px_50px_rgba(37,99,235,0.15)] scale-105 z-10"
+                    ? "border-emerald-500 bg-card shadow-[0_20px_50px_rgba(16,185,129,0.15)] scale-105 z-10"
                     : "border-border bg-background hover:border-slate-300 scale-100"
                 }`}
             >
               {isActive && (
-                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold flex items-center gap-1 shadow-lg">
+                <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-teal-400 text-white px-4 py-1 rounded-full text-sm font-bold flex items-center gap-1 shadow-lg">
                   <Sparkles size={14} /> Active Plan
                 </div>
               )}
@@ -235,9 +235,9 @@ export default function Pricing() {
                     className="flex items-start gap-3 font-semibold text-slate-600 dark:text-slate-300 italic leading-tight"
                   >
                     <div
-                      className={`mt-1 rounded-full p-0.5 ${isActive ? "bg-blue-600/10" : "bg-slate-100"}`}
+                      className={`mt-1 rounded-full p-0.5 ${isActive ? "bg-emerald-500/10" : "bg-slate-100"}`}
                     >
-                      <Check size={16} className="text-blue-600" />
+                      <Check size={16} className="text-emerald-500" />
                     </div>
                     {f}
                   </li>
@@ -255,7 +255,7 @@ export default function Pricing() {
                       ? "bg-slate-100 text-slate-400 border border-slate-200"
                       : plan.id === "free"
                         ? "bg-slate-200 text-slate-600"
-                        : "bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl shadow-blue-500/20"
+                        : "bg-gradient-to-r from-emerald-500 to-teal-400 text-white hover:from-emerald-600 hover:to-teal-500 hover:shadow-xl shadow-emerald-500/20"
                   }`}
               >
                 {isPending && clickedPlanId === plan.id ? (

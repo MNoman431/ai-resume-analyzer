@@ -41,7 +41,7 @@ const UserMenu = ({ isLoggedIn = false }: UserMenuProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-secondary transition-all border border-border bg-background"
       >
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 overflow-hidden flex items-center justify-center text-white text-xs font-bold shadow-inner">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 overflow-hidden flex items-center justify-center text-white text-xs font-bold shadow-inner">
           {isLoggedIn ? (
             user?.avatar ? (
               <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
@@ -130,7 +130,7 @@ const ThemeToggle = ({ theme, setTheme }: { theme: string | undefined; setTheme:
     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-xl hover:bg-secondary transition-colors text-foreground/80"
   >
-    {theme === "dark" ? <Sun size={16} className="text-yellow-500" /> : <Moon size={16} className="text-blue-500" />}
+    {theme === "dark" ? <Sun size={16} className="text-yellow-500" /> : <Moon size={16} className="text-emerald-500" />}
     <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
   </button>
 );
@@ -140,7 +140,7 @@ const MenuLink = ({ href, icon, label, onClick }: { href: string; icon: React.Re
   <Link
     href={href}
     onClick={onClick}
-    className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-xl hover:bg-blue-600/10 hover:text-blue-600 transition-all text-foreground/80"
+    className="flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-xl hover:bg-emerald-500/10 hover:text-emerald-500 transition-all text-foreground/80"
   >
     {icon}
     <span>{label}</span>

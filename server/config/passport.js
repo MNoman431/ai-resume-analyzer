@@ -1,15 +1,33 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User from "../models/user.model.js";
 import passport from "passport";
 
 // Ek function banayein jo app.js se call hoga
 const configurePassport = () => {
+  const clientID = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+  if (!clientID || !clientSecret) {
+    console.warn("⚠️ Google OAuth credentials missing in environment variables. Google login will be disabled.");
+    return;
+  }
+
+  const port = process.env.PORT || 5000;
+  const callbackURL =
+    process.env.GOOGLE_CALLBACK_URL ||
+    `http://localhost:${port}/api/user/google/callback`;
+
+  console.log(`🔐 Google OAuth Callback URL: ${callbackURL}`);
+
   passport.use(
     new GoogleStrategy(
       {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "/user/google/back", // Route check karlein (app.js mein /user prefix hai)
+        clientID: clientID,
+        clientSecret: clientSecret,
+        callbackURL: callbackURL,
         proxy: true,
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -42,5 +60,7 @@ const configurePassport = () => {
     ),
   );
 };
+
+configurePassport();
 
 export default configurePassport;

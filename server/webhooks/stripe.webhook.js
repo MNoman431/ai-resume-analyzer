@@ -53,6 +53,9 @@ export const stripeWebhook = async (req, res) => {
       const expiryDate = new Date();
       expiryDate.setDate(expiryDate.getDate() + 30);
 
+      const userObj = await userModel.findById(userId);
+      const userEmail = session.customer_details?.email || session.customer_email || userObj?.email;
+
       // ✅ Run both operations together
       await Promise.all([
         // Update User
@@ -68,12 +71,15 @@ export const stripeWebhook = async (req, res) => {
         // Create Payment Record
         paymentSchema.create({
           user: userId,
+          userId: userId,
+          email: userEmail,
           stripeSessionId: session.id,
           stripeCustomerId: session.customer,
           subscriptionId: session.subscription,
           amount: session.amount_total / 100,
           currency: session.currency,
-          status: "succeeded",
+          status: "completed",
+          plan: planType,
           planType,
         }),
       ]);

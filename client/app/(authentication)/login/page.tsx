@@ -58,7 +58,7 @@ export default function LoginPage() {
         <input
           type="email"
           {...register("email", { required: "Email is required" })}
-          className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-emerald-500 outline-none"
         />
 
         {errors.email?.message && (
@@ -75,7 +75,7 @@ export default function LoginPage() {
         <input
           type="password"
           {...register("password", { required: "Password is required" })}
-          className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-emerald-500 outline-none"
         />
 
         {errors.password?.message && (
@@ -89,7 +89,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={forgetgetHandler }
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-emerald-500 hover:underline"
           >
             Forgot password?
           </button>
@@ -104,7 +104,7 @@ export default function LoginPage() {
         className={`w-full py-2 rounded text-white font-semibold transition ${
           isPending
             ? "bg-gray-400 cursor-not-allowed"
-            : "bg-blue-600 hover:bg-blue-700"
+            : "bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 shadow-md shadow-emerald-500/20"
         }`}
       >
         {isPending ? "Logging in..." : "Login"}
@@ -138,7 +138,7 @@ export default function LoginPage() {
     <p className="text-center text-sm mt-6 text-gray-500">
       Do not have an account?{" "}
       <span
-        className="text-blue-600 cursor-pointer hover:underline"
+        className="text-emerald-500 cursor-pointer hover:underline"
         onClick={() => router.push('/register')}
       >
         Sign up

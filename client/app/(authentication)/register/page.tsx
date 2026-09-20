@@ -58,7 +58,7 @@ export default function RegisterForm() {
 
             <input
               {...register("name", { required: "Name is required" })}
-              className="w-full bg-background border border-border text-foreground rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background border border-border text-foreground rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 outline-none"
               placeholder="John Doe"
             />
 
@@ -78,7 +78,7 @@ export default function RegisterForm() {
             <input
               type="email"
               {...register("email", { required: "Email is required" })}
-              className="w-full bg-background border border-border text-foreground rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background border border-border text-foreground rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 outline-none"
               placeholder="you@gmail.com"
             />
 
@@ -98,7 +98,7 @@ export default function RegisterForm() {
             <input
               type="password"
               {...register("password", { required: "Password is required" })}
-              className="w-full bg-background border border-border text-foreground rounded-lg p-2.5 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background border border-border text-foreground rounded-lg p-2.5 focus:ring-2 focus:ring-emerald-500 outline-none"
               placeholder="••••••••"
             />
 
@@ -116,7 +116,7 @@ export default function RegisterForm() {
             className={`w-full py-2.5 rounded-lg text-white font-medium transition ${
               isPending
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
+                : "bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-600 hover:to-teal-500 shadow-md shadow-emerald-500/20"
             }`}
           >
             {isPending ? "Processing..." : "Create Account"}
@@ -126,7 +126,7 @@ export default function RegisterForm() {
         <p className="text-center text-sm mt-6 text-gray-500">
           Do you have an account?{" "}
           <span
-            className="text-blue-600 cursor-pointer hover:underline"
+            className="text-emerald-500 cursor-pointer hover:underline"
             onClick={() => router.push("/login")}
           >
             sign In

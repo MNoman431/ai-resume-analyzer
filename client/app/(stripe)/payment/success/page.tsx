@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { Check, Sparkles, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { verifyPaymentSession } from "@/services/stripeService";
+
 export default function SuccessPage() {
   const params = useSearchParams();
   const router = useRouter();
@@ -13,6 +15,10 @@ export default function SuccessPage() {
   useEffect(() => {
     if (!sessionId) {
       router.push("/pricing");
+    } else {
+      verifyPaymentSession(sessionId).catch((err) => {
+        console.error("Payment verification sync error:", err);
+      });
     }
   }, [sessionId, router]);
 

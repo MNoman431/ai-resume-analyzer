@@ -13,5 +13,7 @@ initCronJobs();
 
 configurePassport(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
 app.listen(PORT, () => {
+    const callbackURL = process.env.GOOGLE_CALLBACK_URL || `http://localhost:${PORT}/api/user/google/callback`;
     console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Google OAuth Authorized Redirect URI: ${callbackURL}`);
 });

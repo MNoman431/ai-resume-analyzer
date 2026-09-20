@@ -50,10 +50,10 @@ Resume: ${resumeText}
 Job Description: ${jobDescription}
 `;
         const completion = await groq.chat.completions.create({
-            model: "llama-3.3-70b-versatile",
+            model: "openai/gpt-oss-20b",
             messages: [{ role: "user", content: prompt }],
             temperature: 0.1, // Precision ke liye temperature kam rakha hai
-            response_format: { type: "json_object" } // Groq supports this for Llama 3
+            response_format: { type: "json_object" } // Groq supports this for JSON output
         });                          
 
         let result = completion.choices[0].message.content;
