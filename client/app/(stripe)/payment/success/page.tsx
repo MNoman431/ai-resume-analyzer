@@ -25,8 +25,8 @@ export default function SuccessPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-6 relative overflow-hidden">
   {/* Background Decor */}
-  <div className="absolute top-[-5%] left-[-5%] w-[30%] h-[30%] bg-blue-600/10 blur-[100px] rounded-full" />
-  <div className="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] bg-blue-400/10 blur-[100px] rounded-full" />
+  <div className="absolute top-[-5%] left-[-5%] w-[30%] h-[30%] bg-emerald-600/10 blur-[100px] rounded-full" />
+  <div className="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] bg-emerald-400/10 blur-[100px] rounded-full" />
 
   <motion.div 
     initial={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -42,12 +42,12 @@ export default function SuccessPage() {
       transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
       className="flex justify-center mb-6"
     >
-      <div className="bg-blue-600 p-4 rounded-full shadow-[0_0_25px_rgba(37,99,235,0.4)] relative">
+      <div className="bg-emerald-600 p-4 rounded-full shadow-[0_0_25px_rgba(16,185,129,0.4)] relative">
         <Check size={36} className="text-white stroke-[4px]" />
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-1 -right-1 text-blue-400"
+          className="absolute -top-1 -right-1 text-emerald-400"
         >
           <Sparkles size={20} />
         </motion.div>
@@ -56,7 +56,7 @@ export default function SuccessPage() {
 
     {/* Success Typography - Balanced spacing */}
     <h1 className="text-3xl md:text-4xl font-black mb-3 tracking-tighter italic leading-none">
-      Payment <span className="text-blue-600">Success!</span>
+      Payment <span className="text-emerald-600">Success!</span>
     </h1>
 
     <p className="text-base text-slate-500 dark:text-slate-400 mb-8 font-medium px-2">
@@ -67,7 +67,7 @@ export default function SuccessPage() {
     <div className="space-y-3">
       <button
         onClick={() => router.push("/subscription")}
-        className="group w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-black text-lg transition-all active:scale-95 flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(37,99,235,0.2)]"
+        className="group w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-black text-lg transition-all active:scale-95 flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(16,185,129,0.2)]"
       >
         Visit your subscription
         <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />

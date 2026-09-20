@@ -53,7 +53,7 @@ export default function ResetPasswordPage() {
               type="password"
               placeholder="New password"
               {...register("password", { required: "Password required" })}
-              className="w-full bg-background text-foreground border border-border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background text-foreground border border-border p-3 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
             />
 
             {errors.password?.message && (
@@ -65,7 +65,7 @@ export default function ResetPasswordPage() {
 
           <button
             disabled={isPending}
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
+            className="w-full bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700"
           >
             {isPending ? "Updating..." : "Reset Password"}
           </button>

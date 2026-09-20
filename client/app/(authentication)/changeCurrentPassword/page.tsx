@@ -68,7 +68,7 @@ export default function ChangePasswordPage() {
             <input
               type="password"
               {...register("oldPassword", { required: "Current password is required" })}
-              className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-emerald-500 outline-none"
               placeholder="••••••••"
             />
             {errors.oldPassword?.message && (
@@ -85,7 +85,7 @@ export default function ChangePasswordPage() {
                 required: "New password is required",
                 minLength: { value: 6, message: "Password must be at least 6 characters" }
               })}
-              className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-emerald-500 outline-none"
               placeholder="••••••••"
             />
             {errors.newPassword?.message && (
@@ -99,7 +99,7 @@ export default function ChangePasswordPage() {
             <input
               type="password"
               {...register("confirmPassword", { required: "Please confirm your password" })}
-              className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full bg-background text-foreground p-2 border border-border rounded focus:ring-2 focus:ring-emerald-500 outline-none"
               placeholder="••••••••"
             />
             {errors.confirmPassword?.message && (
@@ -114,7 +114,7 @@ export default function ChangePasswordPage() {
             className={`w-full py-2 rounded text-white font-semibold transition ${
               isPending
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20"
+                : "bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/20"
             }`}
           >
             {isPending ? "Updating..." : "Change Password"}

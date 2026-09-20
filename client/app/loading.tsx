@@ -7,10 +7,10 @@ export default function Loading() {
       {/* --- LOGO ANIMATION --- */}
       <div className="relative mb-12">
         {/* Outer Pulsing Ring */}
-        <div className="absolute inset-0 bg-blue-600/20 blur-2xl rounded-full animate-pulse"></div>
+        <div className="absolute inset-0 bg-emerald-600/20 blur-2xl rounded-full animate-pulse"></div>
         
         {/* The Animated Logo Box */}
-        <div className="relative w-20 h-20 bg-blue-600 rounded-4xl flex items-center justify-center text-white font-black text-3xl shadow-2xl shadow-blue-500/40 animate-bounce">
+        <div className="relative w-20 h-20 bg-emerald-600 rounded-4xl flex items-center justify-center text-white font-black text-3xl shadow-2xl shadow-emerald-500/40 animate-bounce">
           R
         </div>
       </div>
@@ -39,7 +39,7 @@ export default function Loading() {
 
       {/* --- SPINNER (Bottom) --- */}
       <div className="mt-8">
-        <div className="w-8 h-8 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-emerald-600/20 border-t-emerald-600 rounded-full animate-spin"></div>
       </div>
 
     </div>

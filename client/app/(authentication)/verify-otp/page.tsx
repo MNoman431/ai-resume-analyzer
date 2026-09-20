@@ -55,7 +55,7 @@ export default function VerifyOtpPage() {
 
       <p className="text-sm text-foreground/60 mb-8 text-center">
         we send an otp on this
-        <span className="font-semibold text-blue-600">
+        <span className="font-semibold text-emerald-600">
           {" "} {emailFromUrl}
         </span>
       </p>
@@ -84,14 +84,14 @@ export default function VerifyOtpPage() {
     className={`w-full py-3 rounded-lg text-white font-bold transition-all shadow-md ${
       isPending
         ? 'bg-gray-400 cursor-not-allowed'
-        : 'bg-green-600 hover:bg-green-700 active:scale-[0.98]'
+        : 'bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98]'
     }`}
   >
     {isPending ? "Verifying..." : "Verify OTP"}
   </button>
 </form>
       <div className="mt-6 text-center border-t border-border pt-4">
-        <button className="text-blue-600 text-sm font-medium hover:text-blue-800 transition">
+        <button className="text-emerald-600 text-sm font-medium hover:text-emerald-700 transition">
           Resend OTP?
         </button>
       </div>
