@@ -61,6 +61,6 @@ export const verifyOtp = async (data: VerifyOtpRequest): Promise<AuthResponse> =
 
 export const loginWithGoogle = () => {
   // Google OAuth redirects across domains, so send the user directly to backend.
-  window.location.href = `${BACKEND_URL}/user/google`;
+  window.location.href = `${BACKEND_URL}/api/user/google`;
 };
 

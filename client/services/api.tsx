@@ -1,10 +1,12 @@
 import axios from "axios";
 
 export const API_URL = "/api";
+export const FALLBACK_BACKEND_URL =
+  "https://ai-resume-analyzer-eta-umber.vercel.app";
 export const BACKEND_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   process.env.NEXT_PUBLIC_BACKEND_URL ||
-  "http://localhost:5000";
+  FALLBACK_BACKEND_URL;
 
 export const api = axios.create({
   baseURL: API_URL,

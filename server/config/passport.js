@@ -15,10 +15,11 @@ const configurePassport = () => {
     return;
   }
 
-  const port = process.env.PORT || 5000;
+  const fallbackBackendUrl =
+    "https://ai-resume-analyzer-eta-umber.vercel.app";
   const callbackURL =
     process.env.GOOGLE_CALLBACK_URL ||
-    `http://localhost:${port}/api/user/google/callback`;
+    `${process.env.BACKEND_URL || fallbackBackendUrl}/api/user/google/callback`;
 
   console.log(`🔐 Google OAuth Callback URL: ${callbackURL}`);
 

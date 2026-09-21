@@ -15,6 +15,8 @@ import { verifyJWT } from "../middleware/auth.middleware.js";
 import passport from "passport";
 
 const router = Router();
+const fallbackFrontendUrl = "https://ai-resume-analyzer-eta-umber.vercel.app";
+const frontendUrl = process.env.FRONTEND_URL || fallbackFrontendUrl;
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
@@ -39,7 +41,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: `${process.env.FRONTEND_URL}/login`,
+    failureRedirect: `${frontendUrl}/login`,
   }),
   googleAuthCallback,
 );
@@ -48,7 +50,7 @@ router.get(
   "/google/back",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: `${process.env.FRONTEND_URL}/login`,
+    failureRedirect: `${frontendUrl}/login`,
   }),
   googleAuthCallback, // Clean controller call
 );
