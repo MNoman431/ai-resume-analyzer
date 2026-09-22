@@ -24,11 +24,41 @@ import { api, BACKEND_URL } from "./api";
 
 export const login = async (data: LoginRequest): Promise<AuthResponse> => {
   const response = await api.post("/user/login", data, { withCredentials: true });
+  const token = response.data?.data?.accessToken;
+  const refreshToken = response.data?.data?.refreshToken;
+
+  if (typeof window !== "undefined") {
+    if (token) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("accessToken", token);
+      document.cookie = `token=${token}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `accessToken=${token}; path=/; max-age=604800; SameSite=Lax`;
+    }
+    if (refreshToken) {
+      localStorage.setItem("refreshToken", refreshToken);
+      document.cookie = `refreshToken=${refreshToken}; path=/; max-age=2592000; SameSite=Lax`;
+    }
+    window.dispatchEvent(new Event("auth-token-synced"));
+  }
+
   return response.data;
 };
+
 export const logout = async (): Promise<AuthResponse> => {
-  const response = await api.post("/user/logout", {}, { withCredentials: true });
-  return response.data;
+  try {
+    const response = await api.post("/user/logout", {}, { withCredentials: true });
+    return response.data;
+  } finally {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      document.cookie = "token=; path=/; max-age=0; SameSite=Lax";
+      document.cookie = "accessToken=; path=/; max-age=0; SameSite=Lax";
+      document.cookie = "refreshToken=; path=/; max-age=0; SameSite=Lax";
+      window.dispatchEvent(new Event("auth-token-synced"));
+    }
+  }
 };
 export const forgotPassword = async (
   data: ForgotPasswordRequest
@@ -60,7 +90,9 @@ export const verifyOtp = async (data: VerifyOtpRequest): Promise<AuthResponse> =
 };
 
 export const loginWithGoogle = () => {
-  // Google OAuth redirects across domains, so send the user directly to backend.
-  window.location.href = `${BACKEND_URL}/api/user/google`;
+  // Pass current origin so backend redirects back to the matching frontend (e.g. localhost:3000)
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const queryParam = origin ? `?origin=${encodeURIComponent(origin)}` : "";
+  window.location.href = `${BACKEND_URL}/api/user/google${queryParam}`;
 };
 

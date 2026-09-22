@@ -7,9 +7,26 @@ import User from "../models/user.model.js";
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
 
-    const token =
-        req.cookies?.accessToken ||
-        req.header("Authorization")?.replace("Bearer ", "");
+    // 1. Extract Bearer token from Authorization header (case-insensitive)
+    const authHeader =
+        req.header("Authorization") ||
+        req.header("authorization") ||
+        req.headers?.authorization;
+
+    let token = null;
+
+    if (authHeader) {
+        if (authHeader.startsWith("Bearer ") || authHeader.startsWith("bearer ")) {
+            token = authHeader.substring(7).trim();
+        } else {
+            token = authHeader.trim();
+        }
+    }
+
+    // 2. Fallback to cookies if header is absent
+    if (!token) {
+        token = req.cookies?.accessToken || req.cookies?.token;
+    }
 
     if (!token) {
         throw new ApiError(401, "Access token required");

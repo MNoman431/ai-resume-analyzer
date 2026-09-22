@@ -15,7 +15,23 @@ export const api = axios.create({
 
 
 
-// --- INTERCEPTOR START ---
+// --- REQUEST INTERCEPTOR START ---
+api.interceptors.request.use(
+  (config) => {
+    if (typeof window !== "undefined") {
+      const token =
+        localStorage.getItem("token") || localStorage.getItem("accessToken");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+// --- REQUEST INTERCEPTOR END ---
+
+// --- RESPONSE INTERCEPTOR START ---
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -27,10 +43,43 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry && !isLogoutRequest) {
       originalRequest._retry = true;
       try {
-        await axios.post(`${API_URL}/user/refreshAccessToken`, {}, { withCredentials: true });
+        const refreshToken =
+          typeof window !== "undefined" ? localStorage.getItem("refreshToken") : null;
+
+        const res = await axios.post(
+          `${API_URL}/user/refreshAccessToken`,
+          { refreshToken },
+          { withCredentials: true }
+        );
+
+        const newAccessToken = res.data?.data?.accessToken;
+        const newRefreshToken = res.data?.data?.refreshToken;
+
+        if (newAccessToken && typeof window !== "undefined") {
+          localStorage.setItem("token", newAccessToken);
+          localStorage.setItem("accessToken", newAccessToken);
+          document.cookie = `token=${newAccessToken}; path=/; max-age=604800; SameSite=Lax`;
+          document.cookie = `accessToken=${newAccessToken}; path=/; max-age=604800; SameSite=Lax`;
+          originalRequest.headers = originalRequest.headers || {};
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        }
+
+        if (newRefreshToken && typeof window !== "undefined") {
+          localStorage.setItem("refreshToken", newRefreshToken);
+          document.cookie = `refreshToken=${newRefreshToken}; path=/; max-age=2592000; SameSite=Lax`;
+        }
+
         return api(originalRequest);
       } catch (refreshError) {
-        window.location.href = "/login";
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("token");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          document.cookie = "token=; path=/; max-age=0; SameSite=Lax";
+          document.cookie = "accessToken=; path=/; max-age=0; SameSite=Lax";
+          document.cookie = "refreshToken=; path=/; max-age=0; SameSite=Lax";
+          window.location.href = "/login";
+        }
         return Promise.reject(refreshError);
       }
     }
@@ -38,11 +87,19 @@ api.interceptors.response.use(
     // Agar logout request 401 de rahi hai, to usay refresh karne ki bajaye 
     // seedha resolve kar dein ya login par bhej dein
     if (error.response?.status === 401 && isLogoutRequest) {
-       window.location.href = "/login";
+       if (typeof window !== "undefined") {
+         localStorage.removeItem("token");
+         localStorage.removeItem("accessToken");
+         localStorage.removeItem("refreshToken");
+         document.cookie = "token=; path=/; max-age=0; SameSite=Lax";
+         document.cookie = "accessToken=; path=/; max-age=0; SameSite=Lax";
+         document.cookie = "refreshToken=; path=/; max-age=0; SameSite=Lax";
+         window.location.href = "/login";
+       }
        return Promise.resolve(); 
     }
 
     return Promise.reject(error);
   }
 );
-// --- INTERCEPTOR END ---
+// --- RESPONSE INTERCEPTOR END ---

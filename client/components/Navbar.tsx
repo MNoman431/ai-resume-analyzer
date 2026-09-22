@@ -9,15 +9,38 @@ import { useQuery } from "@tanstack/react-query";
 import { getCurrentUserProfile } from "@/services/userService";
 
 const Navbar = ({ isLoggedIn = false }) => {
+  const [userLoggedIn, setUserLoggedIn] = useState(isLoggedIn);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token") || localStorage.getItem("accessToken")
+          : null;
+      if (token) {
+        setUserLoggedIn(true);
+      } else {
+        setUserLoggedIn(isLoggedIn);
+      }
+    };
+
+    checkAuth();
+    window.addEventListener("auth-token-synced", checkAuth);
+    window.addEventListener("storage", checkAuth);
+    return () => {
+      window.removeEventListener("auth-token-synced", checkAuth);
+      window.removeEventListener("storage", checkAuth);
+    };
+  }, [isLoggedIn]);
 
   // --- Dynamic Data Fetching for Mobile ---
   const { data, isLoading } = useQuery({
     queryKey: ["currentUser"],
     queryFn: getCurrentUserProfile,
-    enabled: isLoggedIn, // Sirf tab fetch kare jab logged in ho
+    enabled: userLoggedIn, // Sirf tab fetch kare jab logged in ho
   });
 
   const user = data?.data;
@@ -70,7 +93,7 @@ const Navbar = ({ isLoggedIn = false }) => {
           {/* Actions */}
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center">
-              <UserMenu isLoggedIn={isLoggedIn} />
+              <UserMenu isLoggedIn={userLoggedIn} />
             </div>
 
             {/* Hamburger Button */}
@@ -115,7 +138,7 @@ const Navbar = ({ isLoggedIn = false }) => {
                 Account & Settings
               </p>
               
-              {isLoggedIn ? (
+              {userLoggedIn ? (
                 <div className="space-y-3">
                   {/* DYNAMIC PROFILE CARD */}
                   <div className="flex items-center gap-4 p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 mb-6 transition-all">

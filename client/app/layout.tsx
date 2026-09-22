@@ -7,6 +7,8 @@ import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
 import { cookies } from "next/headers";
 import Footer from "@/components/Footer";
+import { Suspense } from "react";
+import AuthTokenSync from "@/components/AuthTokenSync";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +34,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const allCookies = cookieStore.getAll();
   console.log("All Cookies in Layout:", allCookies.map(c => c.name));
 
-  const token = cookieStore.get('accessToken')?.value;
+  const token =
+    cookieStore.get('token')?.value ||
+    cookieStore.get('accessToken')?.value;
   console.log("Token in Layout:", token ? "Found ✅" : "Undefined ❌");
 
   const isLogedin = !!token;
@@ -43,6 +47,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* Yahan attribute="data-theme" wapis kar diya hai */}
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
           <QueryProvider>
+            <Suspense fallback={null}>
+              <AuthTokenSync />
+            </Suspense>
             <Toaster position="top-center" />
             <Navbar isLoggedIn={isLogedin} />
             {children}

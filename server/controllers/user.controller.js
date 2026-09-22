@@ -24,14 +24,20 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 const getCookieOptions = (req) => {
-  const isProduction = process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
+  const isProduction =
+    process.env.NODE_ENV === "production" ||
+    process.env.VERCEL === "1" ||
+    Boolean(process.env.VERCEL);
   
-  // Production mein hamesha true, local mein request ke mutabiq
-  const isHttps = isProduction ? true : (req?.secure || req?.headers?.["x-forwarded-proto"] === "https");
+  // Production / Vercel / HTTPS mein secure: true aur sameSite: "none"
+  const isHttps =
+    isProduction ||
+    Boolean(req?.secure) ||
+    req?.headers?.["x-forwarded-proto"] === "https";
 
   return {
     httpOnly: true,
-    secure: isHttps, 
+    secure: Boolean(isHttps), 
     sameSite: isHttps ? "none" : "lax", 
     path: "/",
     maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -161,7 +167,7 @@ const logoutUser = asyncHandler(async (req, res) => {
     .json({ success: true, message: "Logged out" }); // Direct JSON for testing
 });
 const refreshAccessToken = asyncHandler(async (req, res) => {
-  const incomingToken = req.cookies?.refreshToken;
+  const incomingToken = req.cookies?.refreshToken || req.body?.refreshToken;
   // console.log("incomingToken from user controller 193line",incomingToken )
   if (!incomingToken) throw new ApiError(401, "Unauthorized request");
 
@@ -185,7 +191,13 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       .status(200)
       .cookie("accessToken", accessToken, cookieOptions)
       .cookie("refreshToken", newRefreshToken, cookieOptions)
-      .json(new ApiResponse(200, { accessToken }, "Token refreshed"));
+      .json(
+        new ApiResponse(
+          200,
+          { accessToken, refreshToken: newRefreshToken },
+          "Token refreshed",
+        ),
+      );
   } catch (error) {
     console.log("Actual Error:", error.message);
     throw new ApiError(401, "Invalid refresh token");
@@ -339,23 +351,34 @@ const googleAuthCallback = asyncHandler(async (req, res) => {
   const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     req.user._id,
   );
-  console.log("Callback hit with user:", req.user)
+  console.log("Callback hit with user:", req.user?._id || req.user);
+
   // 2. Cookie options set karein
-  // const options = {
-  //   httpOnly: true,
-  //   secure: process.env.NODE_ENV === "production",
-  //   sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-  //   path: "/",
-  // };
   const options = getCookieOptions(req);
   console.log("Cookie Options being set:", options);
-  // 3. Cookies set karke redirect karein
-  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
+  // 3. Dynamic frontend redirect URL based on process.env.FRONTEND_URL
+  let frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+
+  // Check state if passed from frontend (e.g. if initiated from localhost:3000)
+  if (req.query?.state) {
+    try {
+      const decodedOrigin = Buffer.from(req.query.state, "base64").toString("utf-8");
+      if (decodedOrigin.startsWith("http://") || decodedOrigin.startsWith("https://")) {
+        frontendUrl = decodedOrigin;
+      }
+    } catch (e) {
+      console.warn("Could not decode OAuth state:", e);
+    }
+  }
 
   return res
+    .cookie("token", accessToken, options)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .redirect(`${frontendUrl}/`);
+    .redirect(
+      `${frontendUrl}/dashboard?token=${encodeURIComponent(accessToken)}&accessToken=${encodeURIComponent(accessToken)}&refreshToken=${encodeURIComponent(refreshToken)}`,
+    );
 });
 
 // Current User ka subscription aur profile data lene ke liye

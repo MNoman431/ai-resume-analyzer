@@ -18,6 +18,7 @@ app.set("trust proxy", true);
 const allowedOrigins = [
   "http://localhost:3000",
   "http://127.0.0.1:3000",
+  "https://ai-resume-analyzer-335u.vercel.app",
   "https://ai-resume-analyzer-frontend-0078.vercel.app",
   process.env.FRONTEND_URL
 ].filter(Boolean); // Taake undefined values nikal jayein
@@ -27,7 +28,7 @@ app.use(cors({
   origin: function(origin, callback) {
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.includes(origin)) {
+    if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
       callback(null, true);
     } else {
       console.log("CORS Blocked for:", origin);
@@ -35,8 +36,8 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
 }));
 
 /** * FIX: 'app.options' wali crash karne wali line ko hata kar 
@@ -44,6 +45,7 @@ app.use(cors({
  */
 app.use((req, res, next) => {
   if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Credentials', 'true');
     res.sendStatus(200);
   } else {
     next();

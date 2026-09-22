@@ -3,7 +3,18 @@ import { api } from "./api";
 
 
 export const uploadResume = async (formData: FormData) => {
-  const res = await api.post("/resume/upload", formData, { withCredentials: true });
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("token") || localStorage.getItem("accessToken")
+      : "";
+
+  const res = await api.post("/resume/upload", formData, {
+    withCredentials: true,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return res.data;
 };
 

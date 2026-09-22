@@ -12,15 +12,41 @@ interface UserMenuProps {
 }
 
 const UserMenu = ({ isLoggedIn = false }: UserMenuProps) => {
+  const [userLoggedIn, setUserLoggedIn] = useState(isLoggedIn);
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setUserLoggedIn(isLoggedIn);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("token") || localStorage.getItem("accessToken")
+          : null;
+      if (token) {
+        setUserLoggedIn(true);
+      } else {
+        setUserLoggedIn(isLoggedIn);
+      }
+    };
+    checkAuth();
+    window.addEventListener("auth-token-synced", checkAuth);
+    window.addEventListener("storage", checkAuth);
+    return () => {
+      window.removeEventListener("auth-token-synced", checkAuth);
+      window.removeEventListener("storage", checkAuth);
+    };
+  }, [isLoggedIn]);
 
   // --- Dynamic Data Fetching ---
   const { data, isLoading } = useQuery({
     queryKey: ["currentUser"],
     queryFn: getCurrentUserProfile,
-    enabled: isLoggedIn, // Sirf tab fetch kare jab user logged in ho
+    enabled: userLoggedIn, // Sirf tab fetch kare jab user logged in ho
   });
 
   const user = data?.data;
@@ -42,7 +68,7 @@ const UserMenu = ({ isLoggedIn = false }: UserMenuProps) => {
         className="flex items-center gap-2 p-1 pr-2 rounded-full hover:bg-secondary transition-all border border-border bg-background"
       >
         <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 overflow-hidden flex items-center justify-center text-white text-xs font-bold shadow-inner">
-          {isLoggedIn ? (
+          {userLoggedIn ? (
             user?.avatar ? (
               <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
             ) : (
@@ -58,7 +84,7 @@ const UserMenu = ({ isLoggedIn = false }: UserMenuProps) => {
 
       {isOpen && (
         <div className="absolute right-0 mt-3 w-64 bg-card border border-border rounded-2xl shadow-2xl py-2 z-[150] animate-in fade-in zoom-in duration-200">
-          {isLoggedIn ? (
+          {userLoggedIn ? (
             <>
               {/* --- Dynamic Header --- */}
               <div className="px-4 py-3 border-b border-border mb-2">
